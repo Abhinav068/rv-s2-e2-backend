@@ -38,10 +38,19 @@ apiRouter.get('/travel', async (req, res) => {
             ]);
             res.send({ data });
         }
+        else if(order) {
+            let data = await TravelModel.aggregate([
+                {
+                  '$sort': {
+                    'Budget_Per_Person': +order
+                  }
+                }
+              ]);
+            res.send({ data });            
+        }
         else {
             let data = await TravelModel.find();
-            res.send({ data });
-            
+            res.send({ data });            
         }
 
     } catch (error) {
